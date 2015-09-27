@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>PyTexas 2015</title>
+<meta name="author" content="(Joon Ro)"/>
+<meta name="description" content="org file for conferences"/>
+<link rel="stylesheet" href="file:///C:/home/joon/git/reveal.js/css/reveal.css"/>
+<link rel="stylesheet" href="file:///C:/home/joon/git/reveal.js/css/theme/solarized.css" id="theme"/>
+<link rel="stylesheet" href=""/>
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'file:///C:/home/joon/git/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide">
+<h1>PyTexas 2015</h1>
+<h2>Joon Ro</h2>
+<h2><a href="mailto:joon.ro@outlook.com">joon.ro@outlook.com</a></h2>
+<h2>Freeman School of Business, Tulane University</h2>
+</section>
+<section>
+<section id="slide-orgheadline1">
+<h2 id="orgheadline1">Python + Org-mode for fluent output generation of scientific research</h2>
+<aside class="notes">
+<ul class="org-ul">
+<li>Good morning! Thank you for coming to this early-morning session.</li>
+<li>I'm Joon Ro, an Assistant Professor of Marketing at Tulane University</li>
+<li>How many of you use Emacs? How many of you heard of or used org-mode?</li>
+<li>I have been using org-mode more and more, and I wanted to introduce some of
+its capabilities</li>
+<li>I am by no means saying that this is the best way, but &#x2026;</li>
+</ul>
+
+</aside>
+</section>
+</section>
+<section>
+<section id="slide-orgheadline13">
+<h2 id="orgheadline13">Motivation</h2>
+<div class="outline-text-2" id="text-orgheadline13">
+</div></section>
+<section id="slide-orgheadline12">
+<h3 id="orgheadline12">Motivation</h3>
+<div class="outline-text-3" id="text-orgheadline12">
+</div></section>
+<section id="slide-orgheadline2">
+<h4 id="orgheadline2">Output Generation</h4>
+<ul>
+<li class="fragment appear">Generating output (texts, plots, and tables) is an essential part of
+research</li>
+<li class="fragment appear">Usually consists of small (~200 lines) scripts for each plot or table</li>
+<li class="fragment appear">Typically, you have to update these multiple times over the course of a
+Project
+
+<ul>
+<li>There is often a significant time interval between successive updates</li>
+
+</ul></li>
+
+</ul>
+
+<aside class="notes">
+<p>
+Note test
+</p>
+
+</aside>
+</section>
+<section id="slide-orgheadline4">
+<h4 id="orgheadline4">Updating Output</h4>
+<div class="outline-text-4" id="text-orgheadline4">
+</div><ul class="org-ul"><li><a id="orgheadline3"></a>You have to complete the following steps:<br  /><ol>
+<li class="fragment appear">Find the file(s) and the code blocks to generate the output (data,
+analysis, plot, and table)</li>
+<li class="fragment appear">Re-learn the code so you know where to edit</li>
+<li class="fragment appear">Run the code to update the plots</li>
+
+</ol></li></ul>
+</section>
+<section id="slide-orgheadline5">
+<h4 id="orgheadline5">Challenges</h4>
+<ul>
+<li>You can easily end up with multiple files:</li>
+
+</ul>
+
+
+<div class="figure">
+<p><img src="file://c:/home/joon/Dropbox/Teaching/topics/org-mode/img/many_script_files.png" alt="many_script_files.png" />
+</p>
+</div>
+</section>
+<section id="slide-orgheadline6">
+<h4 id="orgheadline6">Challenges (continued)</h4>
+<ul>
+<li class="fragment appear">Navigation becomes challenging if you use a long script</li>
+<li class="fragment appear">Re-learning is not easy due to poor annotation</li>
+<li class="fragment appear">If you are using one file, it is not always easy to run code in blocks</li>
+<li class="fragment appear">You have to edit non-Python (e.g., LaTeX) code</li>
+
+<li class="fragment appear" id="&rArr;">All these cause non-fluency</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline8">
+<h4 id="orgheadline8">IPython Notebook</h4>
+<div class="outline-text-4" id="text-orgheadline8">
+</div><ul class="org-ul"><li><a id="orgheadline7"></a>Better<br  /><ul>
+<li class="fragment appear">Block-executing codes is easy</li>
+<li class="fragment appear">Annotation is nice and easy</li>
+
+</ul></li></ul>
+</section>
+<section id="slide-orgheadline10">
+<h4 id="orgheadline10">IPython Notebook (continued)</h4>
+<div class="outline-text-4" id="text-orgheadline10">
+</div><ul class="org-ul"><li><a id="orgheadline9"></a>However &#x2026;<br  /><ul>
+<li class="fragment appear">You have to run the IPython notebook kernel first to inspect a file</li>
+<li class="fragment appear">You have to navigate through your directory to find the notebook files</li>
+<li class="fragment appear">With multiple files, you have to open each notebook to inspect the code</li>
+<li class="fragment appear">Code navigation becomes clunky as your code becomes longer</li>
+<li class="fragment appear">Sometimes you have to edit non-Python (e.g., LaTeX) code</li>
+
+</ul></li></ul>
+</section>
+<section id="slide-orgheadline11">
+<h4 id="orgheadline11">Motivation</h4>
+<ul>
+<li>Reduce overhead and minimize non-fluency in your workflow using org-mode</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgheadline20">
+<h2 id="orgheadline20">Org-mode</h2>
+<div class="outline-text-2" id="text-orgheadline20">
+</div></section>
+<section id="slide-orgheadline19">
+<h3 id="orgheadline19">Org-mode</h3>
+<div class="outline-text-3" id="text-orgheadline19">
+</div></section>
+<section id="slide-orgheadline14">
+<h4 id="orgheadline14">Org-mode</h4>
+<ul>
+<li class="fragment appear"><a href="http://orgmode.org/">http://orgmode.org/</a></li>
+<li class="fragment appear">A major-mode in Emacs for keeping notes, maintaining TODO lists, planning
+projects, and authoring documents</li>
+<li class="fragment appear">Cross-platform</li>
+<li class="fragment appear">Convenient, flexible markup syntax for hierarchical documents</li>
+<li class="fragment appear">Execute and export code blocks and results</li>
+<li class="fragment appear">One tool for everything - the Python of text management</li>
+<li class="fragment appear">Flexible, can accommodate many different workflows</li>
+
+</ul>
+<aside class="notes">
+<ul class="org-ul">
+<li>There are many useful features in org-mode, but in the interest of time, I'm
+going to focus only on features related to the output generation.</li>
+<li>Last, org-mode is very flexible, and can accommodate many different
+workflows</li>
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgheadline15">
+<h4 id="orgheadline15">Org-mode: Advantages</h4>
+<ul>
+<li class="fragment appear">One hierarchical <code>.org</code> file for everything
+
+<ul>
+<li>No more managing multiple files</li>
+
+</ul></li>
+
+<li class="fragment appear">The file can contain heterogeneous contents: 
+
+<ul>
+<li>TODO list, code (multiple languages), results, paper, everything</li>
+
+</ul></li>
+
+<li class="fragment appear">Excellent for: 
+
+<ul>
+<li>Navigating</li>
+<li>Annotating</li>
+<li>Locating scripts</li>
+
+</ul></li>
+
+<li class="fragment appear">Powerful export facilities: beamer, LaTeX, html, reveal, etc.</li>
+<li class="fragment appear">Literate Programming functionalities (org-babel)</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline16">
+<h4 id="orgheadline16">Sample Org File</h4>
+<ul>
+<li class="fragment appear">Org structure</li>
+<li class="fragment appear">Navigation</li>
+<li class="fragment appear">Editing structure</li>
+<li class="fragment appear">Code blocks</li>
+<li class="fragment appear">Tasks</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline17">
+<h4 id="orgheadline17">Code Execution</h4>
+<ul>
+<li class="fragment appear">Run code blocks inside the org-file</li>
+<li class="fragment appear">Capture and inspect the output in org-mode</li>
+<li class="fragment appear">Selective execution is possible</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline18">
+<h4 id="orgheadline18">Export</h4>
+<ul>
+<li class="fragment appear"><code>export</code>: Export the whole buffer or a subtree</li>
+<li class="fragment appear"><code>tangle</code>: Export source code or results only</li>
+<li class="fragment appear">Literate programming capabilities: noweb expansion</li>
+<li class="fragment appear">Embedding multiple languages:
+
+<ul>
+<li>e.g., pre-written LaTeX header and footer, but the body of the table is
+generated with Python</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgheadline24">
+<h2 id="orgheadline24">Output Generation</h2>
+<div class="outline-text-2" id="text-orgheadline24">
+</div></section>
+<section id="slide-orgheadline23">
+<h3 id="orgheadline23">Output Generation</h3>
+<div class="outline-text-3" id="text-orgheadline23">
+</div></section>
+<section id="slide-orgheadline21">
+<h4 id="orgheadline21">Tables</h4>
+<ul>
+<li class="fragment appear">Sample org file</li>
+<li class="fragment appear">Tangle</li>
+<li class="fragment appear">LyX example</li>
+<li class="fragment appear">Tip: Generate a <code>.tex</code> file with macros in Python so you can use them as
+variables in LaTeX documents</li>
+
+</ul>
+<aside class="notes">
+<ul class="org-ul">
+<li>I know some packages automatically generate tables, but I prefer to have
+fancy tables</li>
+<li>Examples are at <code>/home/joon/Dropbox/teaching/Topics/org-mode</code></li>
+</ul>
+
+</aside>
+</section>
+<section id="slide-orgheadline22">
+<h4 id="orgheadline22">Plots</h4>
+<ul>
+<li class="fragment appear">Example</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgheadline29">
+<h2 id="orgheadline29">Conclusion</h2>
+<div class="outline-text-2" id="text-orgheadline29">
+</div></section>
+<section id="slide-orgheadline28">
+<h3 id="orgheadline28">Conclusion</h3>
+<div class="outline-text-3" id="text-orgheadline28">
+</div></section>
+<section id="slide-orgheadline25">
+<h4 id="orgheadline25">Takeaways</h4>
+<p>
+With org-mode, you can minimize overhead in output generation
+</p>
+
+<ul>
+<li class="fragment appear">Put everything about a project in one org file with a tree-like structure</li>
+<li class="fragment appear">Easy navigation of the trees</li>
+<li class="fragment appear">Good annotation capability</li>
+<li class="fragment appear">(Selectively) execute source code</li>
+<li class="fragment appear">Export source code or results</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline26">
+<h4 id="orgheadline26">Challenges</h4>
+<ul>
+<li class="fragment appear">Learning curve: Emacs and org-mode</li>
+<li class="fragment appear">Evil mode</li>
+<li class="fragment appear">Spacemacs</li>
+
+</ul>
+</section>
+<section id="slide-orgheadline27">
+<h4 id="orgheadline27">Thank you</h4>
+</section>
+</section>
+</div>
+</div>
+<script src="file:///C:/home/joon/git/reveal.js/lib/js/head.min.js"></script>
+<script src="file:///C:/home/joon/git/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+
+controls: true,
+progress: true,
+history: false,
+center: true,
+slideNumber: true,
+rollingLinks: false,
+keyboard: true,
+overview: true,
+
+theme: Reveal.getQueryHash().theme, // available themes are in /css/theme
+transition: Reveal.getQueryHash().transition || 'default', // default/cube/page/concave/zoom/linear/fade/none
+transitionSpeed: 'default',
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+});
+</script>
+</body>
+</html>

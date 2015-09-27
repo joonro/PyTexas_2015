@@ -1,0 +1,226 @@
+#+TITLE:     Topic: org-mode
+#+AUTHOR:    Joon Ro
+#+EMAIL:     joon.ro@outlook.com
+#+DESCRIPTION: An example org file for presentation
+#+CATEGORY: Presentation
+#+STARTUP: overview
+#+STARTUP: hidestars
+
+* Example Subtree
+:PROPERTIES:
+:DESCRIPTION: This is a property. Properties are =data= of the headline
+:END:
+- A headline can have properties, body, sub-headlines
+- This is the body of the Headline 1
+- Headline level is determined by the number of =*='s before each headline
+- [ ] =<Tab>= expands/collapses headlines 
+** Sub-Headline
+:PROPERTIES:
+:DESCRIPTION: Sub headline
+:END:
+This is the body of the sub-headline 1
+** Navigation
+- [ ] =C-c Arrow=
+- [ ] Finding headlines
+** Editing Structure 
+- [ ] Move around a subtree
+- [ ] Change subtree level
+** Code blocks
+:PROPERTIES:
+:DESCRIPTION: Subtree with code blocks
+:END:
+- Easy to annotate your code.
+- This code is an example does nothing.
+#+BEGIN_SRC python
+import numpy as np
+
+np.zeros((10, 10))
+
+#+END_SRC
+** Tasks
+- This subtree contains tasks
+*** TODO Do presentation
+SCHEDULED: <2015-09-27 Sun>
+
+*** DONE Prepare for presentation
+DEADLINE: <2015-09-26 Sat>
+:LOGBOOK:
+- State "DONE"       from "TODO"       [2015-09-20 Sun 20:06] \\
+  Log message
+:END:
+* Code Blocks 
+- A code block is surrounded by =#+BEGIN_SRC python= and =#+END_SRC=
+- It can have headers, such as =NAME=, options, and data
+- Syntax highlighting
+- Can edit each code block in a dedicated sub-editing buffer
+** Python Code Block
+- Can have =NAME= for identification
+- Header arguments for options
+- Can pass data (variables) with header arguments
+- [ ] =org-edit-src-code= (C-c ') opens a dedicated sub-editing buffer
+#+NAME: Example_Code 
+#+HEADER: :var print_this="Org mode code-block example output"
+#+BEGIN_SRC python :results output code :export results
+# Org-mode code-block source
+print(print_this)
+
+print(list(range(10)))
+#+END_SRC
+
+- Execute the code above with =C-c C-c=
+- Results will be written below (=#+RESULTS:= block with the same name)
+
+#+RESULTS: Example_Code
+#+BEGIN_SRC python
+Org mode code-block example output
+[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+#+END_SRC
+** LaTeX Code Blocks
+*** Header
+:PROPERTIES:
+:noweb-ref: Example_Code_Header
+:END:
+- You can use =noweb-ref= property for noweb expansion
+#+BEGIN_SRC latex
+\begin{verbatim}
+#+END_SRC
+*** Footer
+:PROPERTIES:
+:noweb-ref: Example_Code_Footer
+:END:
+#+BEGIN_SRC latex
+\end{verbatim}
+#+END_SRC
+** Code Execution
+- [ ] Execute code blocks
+** Tangle
+*** tangle source
+- noweb expansion
+- [ ] =tangle= the source code
+#+BEGIN_SRC python :tangle ./export/Example_Code.py :noweb yes
+<<Example_Code>>
+#+END_SRC
+*** tangle output
+- noweb expansion with argument =()= will export results instead
+- [ ] Weave LaTeX and Python source code blocks
+#+BEGIN_SRC latex :tangle ./export/Example_Output.tex :noweb yes
+<<Example_Code_Header>>
+<<Example_Code()>>
+<<Example_Code_Footer>>
+#+END_SRC
+* Output Generation
+** Table Example
+- [ ] =tangle= the code block below (=org-babel-tangle-block=)
+- [ ] =include= LyX example
+- using macro
+#+BEGIN_SRC rst :tangle ./Example_Table.tex :noweb yes
+<<Table_Header>>
+<<Table_Body()>>
+<<Table_Footer>>
+#+END_SRC
+*** Header
+:PROPERTIES:
+:noweb-ref: Table_Header
+:END:
+#+BEGIN_SRC latex
+\vskip0.5em
+\begin{scriptsize}
+% @{ } will tighten (get rid of) the horizental space between two columns surrounding it
+\begin{tabular}{c d{3} d{3} d{3} d{3} d{3} d{3} d{3}}
+\noalign{\vskip0.5em}
+\toprule
+\noalign{\vskip0.5em}
+Count & Mean & STD & Min & 25\% & 50\% & 75\% & Max \tabularnewline
+\noalign{\vskip0.5em}
+\midrule
+\noalign{\vskip0.5em}
+#+END_SRC
+*** Body
+#+NAME: Table_Body
+#+BEGIN_SRC python :results output code :export results
+# Generate table body
+import sys
+sys.path.append('/home/joon/Dropbox/python/modules')
+import utils
+
+import numpy as np
+import pandas as pd
+
+rows = []
+
+for i in range(10):
+    rows.append(
+        pd.Series(
+            np.random.randn(1000), 
+            index=pd.date_range('1/1/2000', periods=1000)
+        ).describe()
+    )
+
+for i, row in enumerate(rows):
+    row_latex = ""
+    for k, cell in enumerate(row):
+        if k == 0:
+            row_latex += "{:4.3f} ".format(cell)
+        else:
+            row_latex += "& {:4.3f}".format(cell)
+
+    row_latex += r" \tabularnewline"
+    # row_latex = row_latex.replace(".", "&")  # 
+    print(row_latex)
+
+macros = []
+macros.append(r'\newcommand{{\meanFirstRow}}{{{:4.3f}}}'.format(rows[0]['mean']) + '\n')
+macros.append(r'\newcommand{{\stdFirstRow}}{{{:4.3f}}}'.format(rows[0]['std']) + '\n')
+
+path_file = 'Macros.tex'
+sep_begin, sep_end = '% BEGIN Summary Statistics\n', '% END Summary Statistics\n'
+
+utils.replace_section_from_text(path_file, macros, sep_begin, sep_end)
+#+END_SRC
+
+#+RESULTS: Table_Body
+#+BEGIN_SRC python
+1000.000 & -0.047& 0.975& -3.213& -0.724& -0.072& 0.667& 3.439 \tabularnewline
+1000.000 & 0.021& 0.975& -3.253& -0.633& 0.075& 0.669& 3.315 \tabularnewline
+1000.000 & 0.037& 0.995& -2.970& -0.633& 0.079& 0.699& 2.738 \tabularnewline
+1000.000 & -0.004& 1.008& -4.191& -0.664& -0.015& 0.648& 3.489 \tabularnewline
+1000.000 & -0.045& 1.025& -3.562& -0.739& -0.038& 0.628& 3.087 \tabularnewline
+1000.000 & 0.038& 1.038& -3.392& -0.680& 0.064& 0.785& 2.982 \tabularnewline
+1000.000 & -0.021& 1.009& -3.428& -0.695& -0.038& 0.666& 2.822 \tabularnewline
+1000.000 & 0.007& 1.033& -3.346& -0.670& 0.033& 0.733& 3.507 \tabularnewline
+1000.000 & 0.051& 0.976& -2.918& -0.577& 0.054& 0.736& 2.854 \tabularnewline
+1000.000 & 0.026& 1.017& -3.680& -0.661& 0.002& 0.734& 3.431 \tabularnewline
+#+END_SRC
+*** Footer
+:PROPERTIES:
+:noweb-ref: Table_Footer
+:END:
+#+BEGIN_SRC latex
+\bottomrule
+\noalign{\vskip0.5em}
+\multicolumn{7}{l}{\tiny }  \tabularnewline
+\end{tabular}
+\end{scriptsize}
+#+END_SRC
+** Plots
+- Simple plotting example
+- http://matplotlib.org/examples/shapes_and_collections/scatter_demo.html
+#+BEGIN_SRC python
+"""
+Simple demo of a scatter plot.
+"""
+import numpy as np
+import matplotlib.pyplot as plt
+
+N = 50
+x = np.random.rand(N)
+y = np.random.rand(N)
+colors = np.random.rand(N)
+area = np.pi * (15 * np.random.rand(N))**2 # 0 to 15 point radiuses
+
+plt.scatter(x, y, s=area, c=colors, alpha=0.5)
+plt.show()
+#+END_SRC
+
+#+RESULTS:
+: None
